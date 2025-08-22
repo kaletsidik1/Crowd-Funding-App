@@ -1,5 +1,6 @@
 # Node modules
 node_modules/
+generated
 
 # Environment files (secrets)
 .env
@@ -54,3 +55,4 @@ jest.cache
 # Misc
 *.tgz
 .cache/
+/generated/prisma
