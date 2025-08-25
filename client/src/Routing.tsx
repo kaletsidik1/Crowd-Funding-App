@@ -1,5 +1,8 @@
 // src/Routing.tsx
 
+
+
+import Landing from './pages/Landing/Landing'
 import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import VerificationPage from './pages/Login/VerficationPage';
@@ -10,6 +13,7 @@ export default function Routing() {
     <div>
       <Routes>
         
+        <Route path='/' element={<Landing/>}/>
         <Route path='/login' element={<Login />} />
         <Route path='/login/verify' element={<VerificationPage />} />
         <Route path='/signup' element={<Signup />} />
