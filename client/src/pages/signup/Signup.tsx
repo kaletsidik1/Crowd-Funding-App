@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SignupSchema, type SignupForm } from '../../schemas/SignupSchema.ts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheckCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../assets/images/logo.png'
 
 // Define a type for the Button component's props
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -91,9 +92,9 @@ const Signup = () => {
         </Link>
         <div className="flex justify-center">
           <img
-            src="../../images/logo.png"
+            src={logo}
             alt="InnovateFund Logo"
-            className="h-12 w-auto"
+            className="h-auto w-[200px]"
           />
         </div>
         <h1 className="text-2xl font-bold text-center text-gray-800 mt-4">Create an account</h1>

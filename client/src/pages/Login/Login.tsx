@@ -8,6 +8,7 @@ import { LoginSchema, type LoginForm } from './../../schemas/LoginSchema.ts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 import { faCheckCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../assets/images/logo.png'
 
 // Define a type for the Button component's props
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -91,9 +92,9 @@ const Login = () => {
         </Link>
         <div className="flex justify-center">
           <img
-            src="../../images/logo.png"
+            src={logo}
             alt="InnovateFund Logo"
-            className="h-12 w-auto"
+            className="h-auto w-[200px]"
           />
         </div>
 

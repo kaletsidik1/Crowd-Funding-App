@@ -7,6 +7,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import VerificationPage from './pages/Login/VerficationPage';
 import Signup from './pages/signup/Signup';
+import Payment from './pages/payment/Payment';
 
 export default function Routing() {
   return (
@@ -17,6 +18,7 @@ export default function Routing() {
         <Route path='/login' element={<Login />} />
         <Route path='/login/verify' element={<VerificationPage />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/payment' element={<Payment/>}/>
       </Routes>
     </div>
   );
