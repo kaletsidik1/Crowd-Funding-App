@@ -12,8 +12,7 @@ import Payment from './pages/payment/Payment';
 export default function Routing() {
   return (
     <div>
-      <Routes>
-        
+      <Routes>        
         <Route path='/' element={<Landing/>}/>
         <Route path='/login' element={<Login />} />
         <Route path='/login/verify' element={<VerificationPage />} />
