@@ -1,7 +1,8 @@
-import React from 'react'
-import { Route,Routes } from 'react-router-dom'
-import Login from './pages/Login/Login'
-import Signup from './pages/signup/Signup'
+// src/Routing.tsx
+
+import { Route, Routes } from 'react-router-dom'
+import Login from './pages/Login/Login' // Correct import path
+import Signup from './pages/signup/Signup' // Correct import path
 
 export default function Routing() {
   return (
