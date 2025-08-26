@@ -1,36 +1,51 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
-import logo from '../../assets/images/logo.png'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import logo from '../../assets/images/logo.png';
 
+// This Header component now has a consistent design with the Payment page,
+// using matching colors, spacing, and component styles.
 export default function Header() {
   return (
-    <div className='w-full  m-0 p-0'>
-      <header className='flex flex-row justify-between items-center w-full px-6  '>
-        <div>
-          <img src={logo} alt="InnovateFund Logo" className='w-[150px] h-auto'/>
+    <header className="bg-white text-gray-800 shadow-md py-4">
+      <div className="container mx-auto px-4 flex items-center justify-between">
+        {/* Logo and Tagline */}
+        <div className="flex items-center space-x-2">
+          <img src={logo} alt="InnovateFund Logo" className="h-10 w-auto" />
+          <span className="text-xl font-bold">INNOVATE<br />FUND</span>
         </div>
 
-        <div className="flex items-center space-x-2 rounded-full border border-gray-300 p-2 focus-within:ring-2 focus-within:ring-blue-500 w-[660px]">
-          <div>
-            <SearchTwoToneIcon className="text-gray-500" />
+        {/* Search bar, hidden on small screens */}
+        <div className="flex-1 max-w-lg mx-8 hidden md:block">
+          <div className="relative">
+            <FontAwesomeIcon icon={faSearch} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search projects..."
+              className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-[#6A5A82] focus:border-transparent transition-all duration-200"
+            />
           </div>
-          <input
-            type="text"
-            placeholder="Search projects..."
-            className="flex-grow bg-transparent outline-none"
-          />
         </div>
 
-        <nav className='mt-2'>
-          <ul className='flex flex-row gap-6 items-center'>
-            <li><Link to={"/"}>Home</Link></li>
-            <li><Link to={"/login"}>create a campaign</Link></li>
-            <li className='border-none bg-blue-400 p-1 rounded-[7px]'>
-              <Link to={"/login"}>Log in</Link></li>
-          </ul>
+        {/* Navigation links */}
+        <nav className="flex items-center space-x-6">
+          <Link to="/" className="text-gray-600 hover:text-gray-900 font-medium hidden md:block">
+            Home
+          </Link>
+          <Link to="/create-campaign" className="text-gray-600 hover:text-gray-900 font-medium hidden md:block">
+            Create a campaign
+          </Link>
         </nav>
-      </header>
-    </div>
-  )
+
+        {/* Login button */}
+        <Link 
+          to="/login"
+          className="bg-[#6A5A82] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#584C69] transition-colors duration-200 ml-4"
+        >
+          Log in
+        </Link>
+      </div>
+    </header>
+  );
 }
