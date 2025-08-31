@@ -1,12 +1,15 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/images/logo.png';
+import DropdownMenu from '../cards/DropDown';
 
 // This Header component now has a consistent design with the Payment page,
 // using matching colors, spacing, and component styles.
 export default function Header() {
+
+   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   return (
     <header className="bg-white text-gray-800 shadow-md py-4">
       <div className="container mx-auto px-4 flex items-center justify-between">
@@ -39,12 +42,16 @@ export default function Header() {
         </nav>
 
         {/* Login button */}
-        <Link 
+
+        {isLoggedIn?<DropdownMenu/> :(
+           <Link 
           to="/login"
           className="bg-[#6A5A82] text-white font-semibold py-2 px-6 rounded-full hover:bg-[#584C69] transition-colors duration-200 ml-4"
         >
           Log in
         </Link>
+        ) }
+        
       </div>
     </header>
   );

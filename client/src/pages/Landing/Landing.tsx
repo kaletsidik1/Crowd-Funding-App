@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef,useState } from 'react'
 import Header from '../../components/header/Header'
 import Carousel from '../../components/carousel/Carousel'
 import CampaignCard from '../../components/cards/CampaignCard'
@@ -8,7 +8,21 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import FeatureSection from '../../components/cards/FeatureSection'
 import Footer from '../../components/footer/Footer'
 
+
+
+
 export default function Landing() {
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+
+    const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  // This function would be called when a user logs out
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +40,7 @@ export default function Landing() {
 
   return (
     <div>
+      
       <Header/>
       <Carousel/>
        <section className="py-12 relative  overflow-hidden">
