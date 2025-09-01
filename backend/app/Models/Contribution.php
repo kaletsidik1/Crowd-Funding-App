@@ -3,15 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Contribution extends Model
 {
-    use HasUuids;
-
     protected $primaryKey = 'contribution_id';
-    protected $keyType = 'string';
-    public $incrementing = false;
 
     protected $fillable = [
         'backer_id',
