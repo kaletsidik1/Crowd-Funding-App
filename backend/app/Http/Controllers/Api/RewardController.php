@@ -2,47 +2,86 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Models\Reward;
+use App\Models\Campaign;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
-class RewardController
+class RewardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
+        $rewards = Reward::with(['campaign'])->paginate(10);
+        return response()->json($rewards);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        $request->validate([
+            'campaign_id' => 'required|exists:campaigns,campaign_id',
+            'title' => 'required|string|max:100',
+            'description' => 'nullable|string',
+            'minimum_contribution_amount' => 'required|numeric|min:0',
+            'quantity_available' => 'nullable|integer|min:0',
+            'delivery_date' => 'nullable|date|after:today',
+        ]);
+
+        // Check if user is the campaign creator
+        $campaign = Campaign::findOrFail($request->campaign_id);
+        if ($campaign->creator_id !== $request->user()->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $reward = Reward::create($request->only([
+            'campaign_id', 'title', 'description', 
+            'minimum_contribution_amount', 'quantity_available', 'delivery_date'
+        ]));
+
+        return response()->json($reward->load(['campaign']), 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        $reward = Reward::with(['campaign'])->findOrFail($id);
+        return response()->json($reward);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): JsonResponse
     {
-        //
+        $reward = Reward::with(['campaign'])->findOrFail($id);
+        
+        // Check if user is the campaign creator
+        if ($reward->campaign->creator_id !== $request->user()->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'title' => 'sometimes|string|max:100',
+            'description' => 'sometimes|nullable|string',
+            'minimum_contribution_amount' => 'sometimes|numeric|min:0',
+            'quantity_available' => 'sometimes|nullable|integer|min:0',
+            'delivery_date' => 'sometimes|nullable|date|after:today',
+        ]);
+
+        $reward->update($request->only([
+            'title', 'description', 'minimum_contribution_amount', 
+            'quantity_available', 'delivery_date'
+        ]));
+
+        return response()->json($reward->load(['campaign']));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id): JsonResponse
     {
-        //
+        $reward = Reward::with(['campaign'])->findOrFail($id);
+        
+        // Check if user is the campaign creator
+        if ($reward->campaign->creator_id !== $request->user()->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        $reward->delete();
+        return response()->json(['message' => 'Reward deleted successfully']);
     }
 }
