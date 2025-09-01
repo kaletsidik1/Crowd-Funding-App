@@ -12,7 +12,7 @@ class RewardController extends Controller
 {
     public function index(): JsonResponse
     {
-        $rewards = Reward::with(['campaign'])->paginate(10);
+        $rewards = Reward::paginate(10);
         return response()->json($rewards);
     }
 
@@ -38,21 +38,22 @@ class RewardController extends Controller
             'minimum_contribution_amount', 'quantity_available', 'delivery_date'
         ]));
 
-        return response()->json($reward->load(['campaign']), 201);
+        return response()->json($reward, 201);
     }
 
     public function show(string $id): JsonResponse
     {
-        $reward = Reward::with(['campaign'])->findOrFail($id);
+        $reward = Reward::findOrFail($id);
         return response()->json($reward);
     }
 
     public function update(Request $request, string $id): JsonResponse
     {
-        $reward = Reward::with(['campaign'])->findOrFail($id);
+        $reward = Reward::findOrFail($id);
         
         // Check if user is the campaign creator
-        if ($reward->campaign->creator_id !== $request->user()->user_id) {
+        $campaign = Campaign::find($reward->campaign_id);
+        if ($campaign->creator_id !== $request->user()->user_id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -69,15 +70,16 @@ class RewardController extends Controller
             'quantity_available', 'delivery_date'
         ]));
 
-        return response()->json($reward->load(['campaign']));
+        return response()->json($reward);
     }
 
     public function destroy(Request $request, string $id): JsonResponse
     {
-        $reward = Reward::with(['campaign'])->findOrFail($id);
+        $reward = Reward::findOrFail($id);
         
         // Check if user is the campaign creator
-        if ($reward->campaign->creator_id !== $request->user()->user_id) {
+        $campaign = Campaign::find($reward->campaign_id);
+        if ($campaign->creator_id !== $request->user()->user_id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
