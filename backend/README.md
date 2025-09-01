@@ -142,7 +142,11 @@ A Laravel-based REST API backend for the Crowd Funding Application.
 
 7. Start the development server:
    ```bash
-   php artisan serve
+   php artisan serve 
+   or 
+   php -S localhost:8001 -t public   # in some machines
+   # or
+   php -d memory_limit=256M -S localhost:8001 -t public   # with increased memory limit
    ```
 
 ### Database Configuration
@@ -158,7 +162,7 @@ For MySQL:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=crowd_funding_app
+DB_DATABASE=crowd_funding
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -168,7 +172,7 @@ For PostgreSQL:
 DB_CONNECTION=pgsql
 DB_HOST=127.0.0.1
 DB_PORT=5432
-DB_DATABASE=crowd_funding_app
+DB_DATABASE=crowd_funding
 DB_USERNAME=root
 DB_PASSWORD=
 ```
@@ -235,7 +239,3 @@ php artisan test
 3. Make your changes
 4. Add tests
 5. Submit a pull request
-
-## License
-
-This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
