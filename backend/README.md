@@ -1,61 +1,241 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Crowd Funding App Backend
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel-based REST API backend for the Crowd Funding Application.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **User Authentication**: Register, login, logout with Laravel Sanctum
+- **User Management**: CRUD operations for users
+- **Category Management**: CRUD operations for campaign categories
+- **Campaign Management**: Create, read, update, delete campaigns
+- **Reward Management**: Manage campaign rewards
+- **Contribution System**: Handle user contributions to campaigns
+- **Role-based Access Control**: Different user roles (admin, backer)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Database Schema
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Users Table
+- `user_id` (Primary Key, Auto-increment)
+- `email` (Unique)
+- `password_hash`
+- `full_name`
+- `roles` (JSON array)
+- `created_at`, `updated_at`
 
-## Learning Laravel
+### Categories Table
+- `category_id` (Primary Key, Auto-increment)
+- `name` (Unique)
+- `created_at`, `updated_at`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Campaigns Table
+- `campaign_id` (Primary Key, Auto-increment)
+- `creator_id` (Foreign Key to users)
+- `category_id` (Foreign Key to categories)
+- `title`
+- `description`
+- `target_amount`
+- `current_amount`
+- `image_url`
+- `start_date`
+- `end_date`
+- `status` (active, pending, completed, cancelled)
+- `created_at`, `updated_at`
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Rewards Table
+- `reward_id` (Primary Key, Auto-increment)
+- `campaign_id` (Foreign Key to campaigns)
+- `title`
+- `description`
+- `minimum_contribution_amount`
+- `quantity_available`
+- `delivery_date`
+- `created_at`, `updated_at`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Contributions Table
+- `contribution_id` (Primary Key, Auto-increment)
+- `backer_id` (Foreign Key to users)
+- `campaign_id` (Foreign Key to campaigns)
+- `reward_id` (Foreign Key to rewards)
+- `amount`
+- `payment_status` (pending, completed, failed)
+- `contribution_date`
+- `created_at`, `updated_at`
 
-## Laravel Sponsors
+## API Endpoints
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Public Routes
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
 
-### Premium Partners
+### Protected Routes (Require Authentication)
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/me` - Get current user info
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+#### Users
+- `GET /api/users` - List all users
+- `GET /api/users/{id}` - Get specific user
+- `PUT /api/users/{id}` - Update user
+- `DELETE /api/users/{id}` - Delete user
+
+#### Categories
+- `GET /api/categories` - List all categories
+- `POST /api/categories` - Create category
+- `GET /api/categories/{id}` - Get specific category
+- `PUT /api/categories/{id}` - Update category
+- `DELETE /api/categories/{id}` - Delete category
+
+#### Campaigns
+- `GET /api/campaigns` - List all campaigns
+- `POST /api/campaigns` - Create campaign
+- `GET /api/campaigns/{id}` - Get specific campaign
+- `PUT /api/campaigns/{id}` - Update campaign
+- `DELETE /api/campaigns/{id}` - Delete campaign
+
+#### Rewards
+- `GET /api/rewards` - List all rewards
+- `POST /api/rewards` - Create reward
+- `GET /api/rewards/{id}` - Get specific reward
+- `PUT /api/rewards/{id}` - Update reward
+- `DELETE /api/rewards/{id}` - Delete reward
+
+#### Contributions
+- `GET /api/contributions` - List all contributions
+- `POST /api/contributions` - Create contribution
+- `GET /api/contributions/{id}` - Get specific contribution
+- `PUT /api/contributions/{id}` - Update contribution
+- `DELETE /api/contributions/{id}` - Delete contribution
+
+## Setup Instructions
+
+### Prerequisites
+- PHP 8.2 or higher
+- Composer
+- SQLite (for development) or MySQL/PostgreSQL (for production)
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
+
+3. Copy `.env.example` to `.env` and configure your database:
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
+
+5. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+
+6. Seed the database:
+   ```bash
+   php artisan db:seed
+   ```
+
+7. Start the development server:
+   ```bash
+   php artisan serve
+   ```
+
+### Database Configuration
+
+For SQLite (Development):
+```
+DB_CONNECTION=sqlite
+DB_DATABASE=database/database.sqlite
+```
+
+For MySQL:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=crowd_funding_app
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+For PostgreSQL:
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=crowd_funding_app
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+## Authentication
+
+The API uses Laravel Sanctum for authentication. To access protected endpoints:
+
+1. Register or login to get an access token
+2. Include the token in the Authorization header:
+   ```
+   Authorization: Bearer {your-token}
+   ```
+
+## Sample API Usage
+
+### Register a new user
+```bash
+curl -X POST http://localhost:8000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "password123",
+    "full_name": "John Doe"
+  }'
+```
+
+### Login
+```bash
+curl -X POST http://localhost:8000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "password123"
+  }'
+```
+
+### Create a campaign (requires authentication)
+```bash
+curl -X POST http://localhost:8000/api/campaigns \
+  -H "Authorization: Bearer {your-token}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "My Amazing Project",
+    "description": "A revolutionary new product",
+    "target_amount": 10000.00,
+    "start_date": "2025-01-01",
+    "end_date": "2025-12-31",
+    "category_id": 1
+  }'
+```
+
+## Testing
+
+Run the test suite:
+```bash
+php artisan test
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests
+5. Submit a pull request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         // Create admin user
         \App\Models\User::create([
             'email' => 'admin@crowdfunding.com',
-            'password_hash' => bcrypt('admin123'),
+            'password' => bcrypt('admin123'),
             'full_name' => 'Admin User',
             'roles' => ['admin', 'backer'],
         ]);
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         // Create sample user
         \App\Models\User::create([
             'email' => 'user@example.com',
-            'password_hash' => bcrypt('password123'),
+            'password' => bcrypt('password123'),
             'full_name' => 'Sample User',
             'roles' => ['backer'],
         ]);
