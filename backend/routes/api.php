@@ -36,31 +36,28 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     
-    // Category routes
-    Route::get('/categories', [CategoryController::class, 'index']);
-    Route::post('/categories', [CategoryController::class, 'store']);
-    Route::get('/categories/{id}', [CategoryController::class, 'show']);
-    Route::put('/categories/{id}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
-    
     // Campaign routes
-    Route::get('/campaigns', [CampaignController::class, 'index']);
     Route::post('/campaigns', [CampaignController::class, 'store']);
-    Route::get('/campaigns/{id}', [CampaignController::class, 'show']);
     Route::put('/campaigns/{id}', [CampaignController::class, 'update']);
     Route::delete('/campaigns/{id}', [CampaignController::class, 'destroy']);
     
     // Reward routes
-    Route::get('/rewards', [RewardController::class, 'index']);
     Route::post('/rewards', [RewardController::class, 'store']);
-    Route::get('/rewards/{id}', [RewardController::class, 'show']);
     Route::put('/rewards/{id}', [RewardController::class, 'update']);
     Route::delete('/rewards/{id}', [RewardController::class, 'destroy']);
     
     // Contribution routes
-    Route::get('/contributions', [ContributionController::class, 'index']);
     Route::post('/contributions', [ContributionController::class, 'store']);
-    Route::get('/contributions/{id}', [ContributionController::class, 'show']);
     Route::put('/contributions/{id}', [ContributionController::class, 'update']);
     Route::delete('/contributions/{id}', [ContributionController::class, 'destroy']);
 });
+
+// Public read routes (no authentication required)
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories/{id}', [CategoryController::class, 'show']);
+Route::get('/campaigns', [CampaignController::class, 'index']);
+Route::get('/campaigns/{id}', [CampaignController::class, 'show']);
+Route::get('/rewards', [RewardController::class, 'index']);
+Route::get('/rewards/{id}', [RewardController::class, 'show']);
+Route::get('/contributions', [ContributionController::class, 'index']);
+Route::get('/contributions/{id}', [ContributionController::class, 'show']);
