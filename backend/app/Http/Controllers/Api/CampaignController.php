@@ -11,7 +11,7 @@ class CampaignController extends Controller
 {
     public function index(): JsonResponse
     {
-        $campaigns = Campaign::with(['creator', 'category'])->paginate(10);
+        $campaigns = Campaign::paginate(10);
         return response()->json($campaigns);
     }
 
@@ -45,7 +45,7 @@ class CampaignController extends Controller
 
     public function show(string $id): JsonResponse
     {
-        $campaign = Campaign::with(['creator', 'category', 'rewards', 'contributions'])->findOrFail($id);
+        $campaign = Campaign::findOrFail($id);
         return response()->json($campaign);
     }
 
