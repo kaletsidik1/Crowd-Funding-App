@@ -39,7 +39,8 @@ class CampaignController extends Controller
             ]
         ));
 
-        return response()->json($campaign->load(['creator', 'category']), 201);
+        // Return campaign without loading relationships to prevent memory issues
+        return response()->json($campaign, 201);
     }
 
     public function show(string $id): JsonResponse
@@ -72,7 +73,8 @@ class CampaignController extends Controller
             'start_date', 'end_date', 'category_id'
         ]));
 
-        return response()->json($campaign->load(['creator', 'category']));
+        // Return campaign without loading relationships to prevent memory issues
+        return response()->json($campaign);
     }
 
     public function destroy(Request $request, string $id): JsonResponse
