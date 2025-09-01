@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contributions', function (Blueprint $table) {
-            $table->uuid('contribution_id')->primary();
-            $table->uuid('backer_id')->nullable();
-            $table->uuid('campaign_id');
-            $table->uuid('reward_id')->nullable();
+            $table->id('contribution_id');
+            $table->unsignedBigInteger('backer_id')->nullable();
+            $table->unsignedBigInteger('campaign_id');
+            $table->unsignedBigInteger('reward_id')->nullable();
             $table->decimal('amount', 10, 2);
             $table->enum('payment_status', ['pending', 'completed', 'failed']);
             $table->timestamp('contribution_date')->useCurrent();

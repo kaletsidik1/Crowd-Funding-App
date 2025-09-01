@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('campaigns', function (Blueprint $table) {
-            $table->uuid('campaign_id')->primary();
-            $table->uuid('creator_id');
-            $table->uuid('category_id');
+            $table->id('campaign_id');
+            $table->unsignedBigInteger('creator_id');
+            $table->unsignedBigInteger('category_id');
             $table->string('title', 255);
             $table->text('description')->nullable();
             $table->decimal('target_amount', 10, 2);

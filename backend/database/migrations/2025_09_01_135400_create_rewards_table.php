@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rewards', function (Blueprint $table) {
-            $table->uuid('reward_id')->primary();
-            $table->uuid('campaign_id');
+            $table->id('reward_id');
+            $table->unsignedBigInteger('campaign_id');
             $table->string('title', 100);
             $table->text('description')->nullable();
             $table->decimal('minimum_contribution_amount', 10, 2);
