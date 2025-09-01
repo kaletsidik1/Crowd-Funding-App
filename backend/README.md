@@ -191,7 +191,7 @@ The API uses Laravel Sanctum for authentication. To access protected endpoints:
 
 ### Register a new user
 ```bash
-curl -X POST http://localhost:8000/api/auth/register \
+curl -X POST http://localhost:8001/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "user@example.com",
@@ -202,7 +202,7 @@ curl -X POST http://localhost:8000/api/auth/register \
 
 ### Login
 ```bash
-curl -X POST http://localhost:8000/api/auth/login \
+curl -X POST http://localhost:8001/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "user@example.com",
@@ -212,7 +212,7 @@ curl -X POST http://localhost:8000/api/auth/login \
 
 ### Create a campaign (requires authentication)
 ```bash
-curl -X POST http://localhost:8000/api/campaigns \
+curl -X POST http://localhost:8001/api/campaigns \
   -H "Authorization: Bearer {your-token}" \
   -H "Content-Type: application/json" \
   -d '{
